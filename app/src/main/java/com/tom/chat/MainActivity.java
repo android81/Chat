@@ -27,9 +27,35 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                makeNotification();
+                makeOreoNotification();
             }
         });
+    }
+
+    private void makeOreoNotification() {
+        String channelId = "love";
+        String channelName = "我的最愛";
+        final int NOTIFICATION_ID = 8;
+        //取得通知管理器
+        NotificationManager manager =
+                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        //產生通知頻道
+        NotificationChannel channel = new NotificationChannel(
+                channelId,
+                channelName, NotificationManager.IMPORTANCE_HIGH);
+        //產生頻道
+        manager.createNotificationChannel(channel);
+        //產生通知
+        NotificationCompat.Builder builder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(android.R.drawable.ic_menu_today)
+                        .setContentTitle("This is title")
+                        .setContentText("Testing")
+                        .setContentInfo("This is info")
+                        .setWhen(System.currentTimeMillis())
+                        .setChannelId(channelId);  //設定頻道ID
+        //送出通知
+        manager.notify(1, builder.build());
     }
 
     private void makeNotification() {
