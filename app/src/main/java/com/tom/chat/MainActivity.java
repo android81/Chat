@@ -1,8 +1,13 @@
 package com.tom.chat;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -22,10 +27,25 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                makeNotification();
             }
         });
+    }
+
+    private void makeNotification() {
+        //取得通知管理器
+        NotificationManager manager =
+                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        //產生通知
+        NotificationCompat.Builder builder =
+                new NotificationCompat.Builder(this)
+                .setSmallIcon(android.R.drawable.ic_menu_today)
+                .setContentTitle("This is title")
+                .setContentText("Testing")
+                .setContentInfo("This is info")
+                .setWhen(System.currentTimeMillis());
+        //送出通知
+        manager.notify(1, builder.build());
     }
 
     @Override
