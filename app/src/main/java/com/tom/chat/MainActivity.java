@@ -3,6 +3,9 @@ package com.tom.chat;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -36,8 +39,19 @@ public class MainActivity extends AppCompatActivity {
         final int NOTIFICATION_ID = 8;
         String channelId = "love";
         String channelName = "我的最愛";
-        NotificationManager manager = getNotificationManager(channelId, channelName);
-
+        NotificationManager manager =
+                getNotificationManager(channelId, channelName);
+        Intent intent = new Intent(this, ChatActivity.class);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addParentStack(ChatActivity.class);
+        stackBuilder.addNextIntent(intent);
+        PendingIntent pendingIntent = stackBuilder.getPendingIntent(
+                0, PendingIntent.FLAG_UPDATE_CURRENT);
+        /*PendingIntent pendingIntent =
+                PendingIntent.getActivity(this,
+                        0,
+                        intent,
+                        PendingIntent.FLAG_UPDATE_CURRENT);*/
         //產生通知
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(this)
@@ -46,7 +60,8 @@ public class MainActivity extends AppCompatActivity {
                         .setContentText("Testing")
                         .setContentInfo("This is info")
                         .setWhen(System.currentTimeMillis())
-                        .setChannelId(channelId);  //設定頻道ID
+                        .setChannelId(channelId)  //設定頻道ID
+                        .setContentIntent(pendingIntent);
         //送出通知
         manager.notify(1, builder.build());
     }
