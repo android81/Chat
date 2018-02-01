@@ -131,4 +131,13 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MyService.class);
         stopService(intent);
     }
+
+    public void test(View view){
+        Intent hello = new Intent(this, HelloIntentService.class);
+        hello.putExtra(HelloIntentService.PARAM_MSG, "TEST1");
+        startService(hello);
+        Intent hello2 = new Intent(this, HelloIntentService.class);
+        hello2.putExtra(HelloIntentService.PARAM_MSG, "TEST2");
+        startService(hello2);
+    }
 }
