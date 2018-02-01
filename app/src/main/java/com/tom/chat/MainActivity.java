@@ -121,4 +121,14 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void startMyService(View view){
+        Intent intent = new Intent(this, MyService.class);
+        startService(intent);
+    }
+
+    public void stopMyService(View view){
+        Intent intent = new Intent(this, MyService.class);
+        stopService(intent);
+    }
 }
